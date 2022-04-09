@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "power-app",
+    "slug": "power-app",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "power-app"
+}
