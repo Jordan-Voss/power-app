@@ -1,0 +1,127 @@
+import axios from "axios";
+import authHeader from "./auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const API_URL = "http://188.141.36.19:8080/api/auth/";
+const API_TEST_URL = "http://188.141.36.19:8080/api/test/";
+
+const getPublicContent = () => {
+    return axios
+        .get(API_TEST_URL + "all")
+        .then(response => console.log(response.data))
+        .catch(function (error) {
+            console.log(
+                "There has been a problem with your fetch operation: " +
+                    error.message,
+            );
+            // ADD THIS THROW error
+            throw error;
+        });
+};
+
+export const getUserBoard = async () => {
+    console.log("getting user board");
+    //   console.log(authHeader());
+    //   const a = await authHeader();
+    //   console.log('AUTH HEADER' + a.Authorization);
+    return axios
+        .get(API_TEST_URL + "user", { headers: await authHeader() })
+        .then(response => response.data)
+        .catch(function (error) {
+            console.log("You do not have User access: " + error.message);
+            // ADD THIS THROW error
+            return "";
+        });
+};
+
+export const getModeratorBoard = async () => {
+    console.log("getting Mod board");
+    //   console.log(authHeader());
+    //   const a = await authHeader();
+    //   console.log('AUTH HEADER' + a.Authorization);
+    return axios
+        .get(API_TEST_URL + "mod", { headers: await authHeader() })
+        .then(response => response.data)
+        .catch(function (error) {
+            console.log("You do not have moderator access: " + error.message);
+            // ADD THIS THROW error
+            return "";
+        });
+};
+
+export const getReports = async () => {
+    return axios
+        .get(API_URL, {headers: await authHeader() })
+        .then(response => response.data)
+        .catch(function (error) {
+            console.log(error.message)
+        })
+}
+
+export const logout = async () => {
+    console.log("out");
+    await AsyncStorage.clear();
+    await AsyncStorage.getItem("user")
+        .then(resp => console.log("LOGGED OUT??>>??" + resp))
+        .catch(function (error) {
+            console.log(
+                "There has been a problem with your fetch operation: " +
+                    error.message,
+            );
+            // ADD THIS THROW error
+            throw error;
+        });
+};
+
+export const register = (username, email, password, firstname, lastname) => {
+    console.log("REG" + firstname + lastname + username + email + password);
+    return axios
+        .post(API_URL + "signup", {
+            username,
+            email,
+            password,
+            firstname,
+            lastname
+        })
+        .then(response => {
+            return response;
+        })
+        .catch(function (error) {
+            console.log(
+                "There has been a problem with your fetch operation: " +
+                    error.message,
+            );
+        });
+};
+
+export const isCurrentUser = async () => {
+    const isCurrent = await AsyncStorage.getItem("user");
+    // console.log(isCurrent + 'iscurrent');
+    if (isCurrent !== null) {
+        return Promise.resolve(isCurrent);
+    } else {
+        return Promise.resolve(isCurrent);
+    }
+};
+
+export const getCurrentRole = async () => {
+    const usr = await AsyncStorage.getItem("user");
+    console.log("getting role");
+    if (usr === null) {
+        return "Not Signed In";
+    } else if (JSON.parse(usr).roles[0] === "ROLE_USER") {
+        return "user";
+        // return JSON.parse(usr).roles;
+    } else if (JSON.parse(usr).roles[0] === "ROLE_MOD") {
+        console.log("mod");
+        return "mod";
+    } else if (JSON.parse(usr).roles[0] === "ROLE_ADMIN") {
+        return "admin";
+    }
+};
+
+export default {
+    getPublicContent,
+    //   getUserBoard,
+    //   logout,
+};
