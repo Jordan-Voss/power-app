@@ -53,7 +53,7 @@ setUsername = username => {
     };
 
     handleValidUsername = username => {
-      if (username.trim().length >= 4) {
+      if (username.trim().length >= 4 || username.trim().length < 1) {
         this.setState({isValidUsername: true})
       }else {
         console.log("short");
