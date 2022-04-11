@@ -1,5 +1,8 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import Home from '../Screens/Home'
+import ReferScreen from '../Screens/ReferScreen'
+import ProfileScreen from '../Screens/ProfileScreen'
+
 import {DrawerNavigator} from 'react-navigation'
 import { NavigationContainer } from '@react-navigation/native';
 import DrawerContent from './DrawerContent'
@@ -18,13 +21,16 @@ export default function AppNav() {
              }}
       
       >
-             {
-               DrawerContent.map(drawer=><Drawer.Screen
-                 key={drawer.name}
-                 name={drawer.name}
-                 component={Home}
-               />)
-             }
+        <Drawer.Screen
+                name="Home"
+                component={Home}/>
+                <Drawer.Screen
+                name="ProfileScreen"
+                component={ProfileScreen}/>
+                <Drawer.Screen
+                name="ReferScreen"
+                component={ReferScreen}/>
+    
       </Drawer.Navigator>
       </NavigationContainer>
        );
