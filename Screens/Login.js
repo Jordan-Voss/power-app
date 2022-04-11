@@ -4,6 +4,8 @@ import {login} from '../Services/auth_service';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { styles } from '../Styles/styles';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
+import * as Animatable from 'react-native-animatable';
 
 const initialState = {
 
@@ -13,6 +15,10 @@ export default class Login extends React.Component {
     state = {
         username: "",
         pass: "",
+        isValidUsername: true,
+        isValidPassword: true,
+        isGreenCheckUsername:false,
+        secureTextEntry:true,
         animation: new Animated.Value(0)
 };
 
@@ -24,10 +30,13 @@ export default class Login extends React.Component {
       } 
     setUsername = username => {
         this.setState({ username });
+        this.handleValidUsername(username)
+        this.handleGreenCheck(username)
     };
 
     setPass = pass => {
         this.setState({ pass });
+        this.handleValidPassword(pass)
     };
 
     signUp() {
@@ -47,6 +56,38 @@ export default class Login extends React.Component {
         console.log(resp);
         
     }
+
+    handleGreenCheck = username => {
+        if (username.trim().length >= 4) {
+            this.setState({isGreenCheckUsername: true})
+        }
+        else {
+            this.setState({isGreenCheckUsername: false})
+        }
+    }
+    updateSecureTextEntry = secureTextEntry => {
+        this.setState({secureTextEntry: !this.state.secureTextEntry})
+    }
+
+    handleValidUsername = username => {
+        if (username.trim().length >= 4 || username.trim().length < 1) {
+          this.setState({isValidUsername: true})
+        }else {
+          console.log("short");
+          this.setState({isValidUsername:false})
+        }
+  
+      }
+      handleValidPassword = pass => {
+        console.log("WEFWE");
+        if (pass.trim().length >= 6 || pass.trim().length < 1) {
+          this.setState({isValidPassword: true})
+        }else {
+          console.log("short");
+          this.setState({isValidPassword:false})
+        }
+  
+      }
 
     darken = () => {
         Animated.spring(this.state.animation, {
@@ -80,11 +121,12 @@ export default class Login extends React.Component {
         color: '#22A0B6',
         fontWeight: '600',
 }}>Login</Text>
-            <View style={{
+                       <View style={{
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 10,
+        marginTop:10
       }}>
-              <Ionicons name="person-circle-sharp" size={30} color={'#9BE6DE'} />
+              <Ionicons name="person-circle-outline" size={30} color={'#9BE6DE'} />
               <TextInput 
                 onChangeText={this.setUsername.bind(this)} 
                 value={this.state.username}
@@ -93,19 +135,40 @@ export default class Login extends React.Component {
                 returnKeyType={'next'}
                 underlineColorAndroid={'#FF0000'}
                 placeholder={'Username'}
+                onSubmitEditing={this.onEnd}
+                // onEndEditing={this.handleValidUsername}
                 style={{
                     flex: 1,
                     paddingLeft: 20,
                     borderBottomColor: '#9BE6DE',
                     borderBottomWidth: 1,
-                  }}
-                />
+                  }}/>
+            {this.state.isGreenCheckUsername ? 
+                <Animatable.View
+                    animation="bounceIn"
+                    style={{        flexDirection: 'row',
+                    marginBottom: 10,
+                    marginTop:10}}
+                >
+                    <Feather 
+                        name="check-circle"
+                        color="green"
+                        size={20}
+                    />
+                </Animatable.View>
+                : null}
             </View>
-            <View style={{
+            {this.state.isValidUsername ? null :
+<Animatable.View animation="fadeInLeft" duration={500}>
+<Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
+</Animatable.View>
+    }
+                  <View style={{
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 10,
+        marginTop:10
       }}>
-            <Icon name="lock" size={30} color={'#9BE6DE'} />
+            <Ionicons name="key" size={30} color={'#9BE6DE'} />
               <TextInput 
                 onChangeText={this.setPass.bind(this)} 
                 value={this.state.pass} 
@@ -115,7 +178,7 @@ export default class Login extends React.Component {
                 returnKeyLabel={'done'}
                 returnKeyType={'done'}
                 placeholder={'Password'}
-                secureTextEntry={true}
+                secureTextEntry={this.state.secureTextEntry}
                 style={{
                   flex: 1,
                   paddingLeft: 20,
@@ -123,7 +186,29 @@ export default class Login extends React.Component {
                   borderBottomWidth: 1,
                 }}
               />
+              <TouchableOpacity
+                    onPress={this.updateSecureTextEntry.bind(this)}
+                >
+                    {this.state.secureTextEntry ? 
+                    <Feather 
+                        name="eye-off"
+                        color="white"
+                        size={20}
+                    />
+                    :
+                    <Feather 
+                        name="eye"
+                        color="white"
+                        size={20}
+                    />
+                    }
+                </TouchableOpacity>
             </View>
+            {this.state.isValidPassword ? null :
+<Animatable.View animation="fadeInLeft" duration={500}>
+<Text style={styles.errorMsg}>Password must be 6 characters long.</Text>
+</Animatable.View>
+    }
             <View style={{
               alignSelf: 'center',
               marginTop: 30,

@@ -63,7 +63,7 @@ setUsername = username => {
     }
     handleValidPassword = pass => {
       console.log("WEFWE");
-      if (pass.trim().length >= 6) {
+      if (pass.trim().length >= 6 || pass.trim().length < 1) {
         this.setState({isValidPassword: true})
       }else {
         console.log("short");
@@ -118,23 +118,13 @@ setUsername = username => {
         color: '#22A0B6',
         fontWeight: '600',
 }}>Sign Up</Text>
-{this.state.isValidUsername ? null :
-<Animatable.View animation="fadeInLeft" duration={500}>
-<Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
-</Animatable.View>
-    }
-{this.state.isValidPassword ? null :
-<Animatable.View animation="fadeInLeft" duration={500}>
-<Text style={styles.errorMsg}>Password must be 6 characters long.</Text>
-</Animatable.View>
-    }
             <View style={{
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 10,
+        marginTop:10
       }}>
-              <Ionicons name="person-circle-outline" size={30} color={'#9BE6DE'} />
-              <TextInput 
-                onChangeText={this.setFirstname.bind(this)} 
+      <Icon name="badge-account-horizontal-outline" size={30} color={'#9BE6DE'} />
+      <TextInput                onChangeText={this.setFirstname.bind(this)} 
                 value={this.state.firstname}
                 clearButtonMode={'while-editing'}
                 returnKeyLabel={'next'}
@@ -151,9 +141,10 @@ setUsername = username => {
             </View>
             <View style={{
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 10,
+        marginTop:10
       }}>
-              <Ionicons name="person-circle-outline" size={30} color={'#9BE6DE'} />
+<MaterialIcons name="drive-file-rename-outline" size={30} color="#9BE6DE" /> 
               <TextInput 
                 onChangeText={this.setLastName.bind(this)} 
                 value={this.state.lastname}
@@ -172,7 +163,8 @@ setUsername = username => {
             </View>
             <View style={{
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 10,
+        marginTop:10
       }}>
               <Ionicons name="person-circle-outline" size={30} color={'#9BE6DE'} />
               <TextInput 
@@ -193,9 +185,15 @@ setUsername = username => {
                   }}
                 />
             </View>
+            {this.state.isValidUsername ? null :
+<Animatable.View animation="fadeInLeft" duration={500}>
+<Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
+</Animatable.View>
+    }
             <View style={{
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 10,
+        marginTop:10
       }}>
               <MaterialIcons name="alternate-email" size={30} color={'#9BE6DE'} />
               <TextInput 
@@ -219,7 +217,8 @@ setUsername = username => {
             </View>
             <View style={{
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 10,
+        marginTop:10
       }}>
             <Ionicons name="key" size={30} color={'#9BE6DE'} />
               <TextInput 
@@ -240,6 +239,11 @@ setUsername = username => {
                 }}
               />
             </View>
+            {this.state.isValidPassword ? null :
+<Animatable.View animation="fadeInLeft" duration={500}>
+<Text style={styles.errorMsg}>Password must be 6 characters long.</Text>
+</Animatable.View>
+    }
             <View style={{
               alignSelf: 'center',
               marginTop: 30,

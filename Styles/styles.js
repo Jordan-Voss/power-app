@@ -26,5 +26,6 @@ export const styles = StyleSheet.create({
   errorMsg: {
     color: '#FF0000',
     fontSize: 14,
+    alignSelf:"center"
 },
 });
