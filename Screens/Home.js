@@ -35,25 +35,9 @@ export default class Home extends React.Component {
         style={styles.roundButton1}>
         <MaterialCommunityIcons name="logout" size={24} color="black" />
         <Text>Logout</Text>
-      </TouchableOpacity>
-        </View>
-                <View>
-            <Image style={styles.homeImage} source={require('../images/logo.png')}
-            />
-        </View>
-        <View>
-        <TouchableOpacity
-            style={styles.newReportBtn} onPress={this.newReport.bind(this)}>
-            <Text style={styles.newReportText}>New Report</Text>
         </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity
-              style={styles.newReportBtn}
-              onPress={this.reports.bind(this)}>
-              <Text style={styles.newReportText}>See Reports</Text>
-            </TouchableOpacity>
-        </View>
+        <MaterialCommunityIcons name="weight-lifter" size={50} color="#9BE6DE"/>
+      </View>
       </View>
     )
 }
