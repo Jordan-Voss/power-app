@@ -1,18 +1,18 @@
-import { createStackNavigator } from 'react-navigation-stack'
-import Login from '../Screens/Login'
-import Signup from '../Screens/Signup'
-import AuthScreens from '../Screens/AuthScreens'
+import { createStackNavigator } from "@react-navigation/stack";
+import Login from "../Screens/Login";
+import Signup from "../Screens/Signup";
+import AuthScreens from "../Screens/AuthScreens";
+import AppNav from "./AppNav";
 
+const Stack = createStackNavigator();
 
-const AuthNavigation = createStackNavigator(
-  {
-    Login: { screen: Login },
-    Signup: { screen: Signup }
-  },
-  {
-    initialRouteName: 'Login',
-    headerMode: 'none'
-  }
-)
-
-export default AuthNavigation
+function AuthNavigation() {
+  return (
+    <Stack.Navigator headerMode="hidden">
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="AppNavigation" component={AppNav} />
+    </Stack.Navigator>
+  );
+}
+export default AuthNavigation;

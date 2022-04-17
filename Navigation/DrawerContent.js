@@ -1,19 +1,24 @@
-import Home from '../Screens/Home'
+import Dashboard from "../Screens/Dashboard";
 
 export default [
-    {
-        name:'Home',
-        iconType:'Material',
-        iconName:'face-profile'
-    },
-    {
-        name:'ProfileScreen',
-        iconType:'Feather',
-        iconName:'settings'
-    },
-    {
-        name:'ReferScreen',
-        iconType:'Material',
-        iconName:'bookmark-check-outline'
-    },
- ]
+  {
+    name: "Dashboard",
+    iconType: "Material",
+    iconName: "face-profile",
+  },
+  {
+    name: "ProfileScreen",
+    iconType: "Feather",
+    iconName: "settings",
+  },
+  {
+    name: "ReferScreen",
+    iconType: "Material",
+    iconName: "bookmark-check-outline",
+  },
+  {
+    name: "NewSession",
+    iconType: "Material",
+    iconName: "bookmark-check-outline",
+  },
+];

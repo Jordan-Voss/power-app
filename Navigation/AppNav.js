@@ -1,72 +1,130 @@
-import { createStackNavigator } from 'react-navigation-stack'
-import Home from '../Screens/Home'
-import ReferScreen from '../Screens/ReferScreen'
-import ProfileScreen from '../Screens/ProfileScreen'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Feather from 'react-native-vector-icons/Feather';
+import { createStackNavigator } from "@react-navigation/stack";
+import Dashboard from "../Screens/Dashboard";
+import ReferScreen from "../Screens/ReferScreen";
+import NewSession from "../Screens/NewSession";
+import ProfileScreen from "../Screens/ProfileScreen";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Feather from "react-native-vector-icons/Feather";
+import AuthNav from "./AuthNav";
+import { NavigationContainer } from "@react-navigation/native";
+import DrawerContent from "./DrawerContent";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from "@react-navigation/drawer";
+import { logout } from "../Services/user_service";
+import {
+  CheckBox,
+  Button,
+  Image,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { styles } from "../Styles/styles";
 
-import {DrawerNavigator} from 'react-navigation'
-import { NavigationContainer } from '@react-navigation/native';
-import DrawerContent from './DrawerContent'
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
-const Drawer = createDrawerNavigator();
-export default function AppNav() {
+function CustomDrawerContent(props) {
   return (
-      <NavigationContainer>
-<Drawer.Navigator
-       drawerType="front"
-       initialRouteName="Home"
-       screenOptions={{
+    <>
+      <DrawerContentScrollView {...props}>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate("ProfileScreen")}
+        >
+          <View style={styles.drawerHeader}>
+            <Text>Header</Text>
+          </View>
+        </TouchableOpacity>
+        <View style={{ flex: 1 }}>
+          <DrawerItemList {...props} />
+        </View>
+      </DrawerContentScrollView>
+      <View>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.closeDrawer();
+            props.navigation.navigate("Login");
+          }}
+          style={styles.roundButton1}
+        >
+          <MaterialCommunityIcons name="logout" size={24} color="black" />
+          <Text>Logout</Text>
+        </TouchableOpacity>
+      </View>
+    </>
+  );
+}
+const Drawer = createDrawerNavigator();
+function AppNav() {
+  return (
+    <Drawer.Navigator
+      drawerType="front"
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      initialRouteName="Dashboard"
+      screenOptions={{
+        headerRight: () => (
+          <TouchableOpacity>
+            <MaterialCommunityIcons
+              name="weight-lifter"
+              size={50}
+              color="#9BE6DE"
+            />
+          </TouchableOpacity>
+        ),
         headerShown: true,
         headerStyle: {
-          backgroundOpacity:1,
-          backgroundColor: '#133E7C',
-          shadowColor:"#133E7C",
-          borderBottomColor:"#133E7C",
+          backgroundOpacity: 1,
+          backgroundColor: "#133E7C",
+          shadowColor: "#133E7C",
+          borderBottomColor: "#133E7C",
         },
-        headerBackgroundColor:'#133E7C',
-        headerTitle: '',
-         activeTintColor: '#e91e63',
-         itemStyle: { marginVertical: 10 },
-       }}
-
->
-       {
-         DrawerContent.map(drawer=>
-         <Drawer.Screen
+        headerBackgroundColor: "#133E7C",
+        headerTitle: "",
+        activeTintColor: "#9BE6DE",
+        itemStyle: { marginVertical: 10 },
+      }}
+    >
+      {DrawerContent.map((drawer) => (
+        <Drawer.Screen
           key={drawer.name}
           name={drawer.name}
           options={{
-          drawerIcon:({focused})=>
-           drawer.iconType==='Material' ?
-<MaterialCommunityIcons
-                name={drawer.iconName}
-                size={24}
-                color={focused ? "#e91e63" : "black"}
-            />
-          :
-          drawer.iconType==='Feather' ?
-<Feather
-              name={drawer.iconName}
-              size={24}
-              color={focused ? "#e91e63" : "black"}
-            />
-          :
-<FontAwesome5
-              name={drawer.iconName}
-              size={24}
-              color={focused ? "#e91e63" : "black"}
-            />
-
-        }}
+            drawerIcon: ({ focused }) =>
+              drawer.iconType === "Material" ? (
+                <MaterialCommunityIcons
+                  name={drawer.iconName}
+                  size={24}
+                  color={focused ? "#9BE6DE" : "black"}
+                />
+              ) : drawer.iconType === "Feather" ? (
+                <Feather
+                  name={drawer.iconName}
+                  size={24}
+                  color={focused ? "#9BE6DE" : "black"}
+                />
+              ) : (
+                <FontAwesome5
+                  name={drawer.iconName}
+                  size={24}
+                  color={focused ? "#9BE6DE" : "black"}
+                />
+              ),
+          }}
           component={
-            drawer.name==='Home' ? Home
-              : drawer.name==='Settings' ? ProfileScreen
-                : drawer.name==='Saved Items' ? ReferScreen
-                  : ReferScreen
-                }
-        />)}
-       </Drawer.Navigator>
-      </NavigationContainer>
-      )}
+            drawer.name === "Dashboard"
+              ? Dashboard
+              : drawer.name === "ProfileScreen"
+              ? ProfileScreen
+              : drawer.name === "Saved Items"
+              ? ReferScreen
+              : drawer.name === "NewSession"
+              ? NewSession
+              : ReferScreen
+          }
+        />
+      ))}
+    </Drawer.Navigator>
+  );
+}
+export default AppNav;
