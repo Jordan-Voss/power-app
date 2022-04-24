@@ -11,6 +11,7 @@ import {
 
 export default class NewSession extends Component {
   state = {
+    deviceType: 'none',
     isVisible: false,
   };
   componentDidMount() {
@@ -38,7 +39,8 @@ export default class NewSession extends Component {
             onPress={() => {
               this.displayModal(!this.state.isVisible);
             }}
-          >
+          >Close Modal
+          </Text>
             <View style={styles.deviceType}>
               <Text>Installation Voltage</Text>
               <Picker
@@ -52,9 +54,7 @@ export default class NewSession extends Component {
                 <Picker.Item label="MCB" value="mcb" />
                 <Picker.Item label="MCCB" value="mccb" />
               </Picker>
-            </View>{" "}
-            Close Modal{" "}
-          </Text>
+            </View>
         </Modal>
         <TouchableOpacity
           style={styles.button}
