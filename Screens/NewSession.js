@@ -2,7 +2,7 @@ import React, { Component, useState} from "react";
 // import DropDownPicker from 'react-native-dropdown-picker';
 import {Picker} from '@react-native-picker/picker';
 import {getExerciseList} from '../Services/exercise_service';
-import GestureRecognizer from 'react-native-swipe-gestures';
+import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import {
   View,
   Text,
@@ -90,7 +90,7 @@ async gg() {
               <View>
               <GestureRecognizer
               style={{flex: 1}}
-      onSwipeDown={ () => this.displayModal(!this.state.isVisible) }
+      onSwipeDown={() => this.displayModal(!this.state.isVisible)}
      >
               <Modal
           presentationStyle="formSheet"
@@ -104,6 +104,7 @@ async gg() {
           <View>
             <Image source={require("../images/logo.png")} style={styles.image} />
           <Text style={styles.text}>Choose Exercise: </Text>
+          <TouchableOpacity>
           <Text
             style={styles.closeText}
             onPress={() => {
@@ -111,10 +112,20 @@ async gg() {
             }}
           >Close Modal
           </Text>
+          </TouchableOpacity>
             </View>
         </Modal>
         </GestureRecognizer>
               </View>
+              <TouchableOpacity>
+          <Text
+            style={styles.closeText}
+            onPress={() => {
+              this.displayModal(!this.state.isVisible);
+            }}
+          >Close Modal
+          </Text>
+          </TouchableOpacity>
                 {/* <View style={{
                   // flex:1,
                   justifyContent:'center',
