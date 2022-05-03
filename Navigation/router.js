@@ -83,8 +83,8 @@ export const SignedIn = () => {
               : drawer.name === "Settings"
               ? ProfileScreen
               : drawer.name === "Saved Items"
-              ? ReferScreen
-              : ReferScreen
+              ? Analytics
+              : Analytics
           }
         />
       ))}

@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 
 export default function Header({ screen }) {
   const navigation = useNavigation();
@@ -20,7 +22,7 @@ export default function Header({ screen }) {
 const headerStyles = StyleSheet.create({
   container: {
     position: "absolute",
-    top: 30,
+    top: "300%",
     left: 0,
     width: "100%",
     backgroundColor: "#fa7da7",

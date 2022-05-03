@@ -12,9 +12,9 @@ export default [
     iconName: "settings",
   },
   {
-    name: "ReferScreen",
-    iconType: "Material",
-    iconName: "bookmark-check-outline",
+    name: "Analytics",
+    iconType: "AntDesign",
+    iconName: "linechart",
   },
   {
     name: "NewSession",

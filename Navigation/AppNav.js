@@ -1,10 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import Dashboard from "../Screens/Dashboard";
-import ReferScreen from "../Screens/ReferScreen";
+import Analytics from "../Screens/Analytics";
 import NewSession from "../Screens/NewSession";
 import ProfileScreen from "../Screens/ProfileScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Feather from "react-native-vector-icons/Feather";
+import AntDesign from "react-native-vector-icons/AntDesign"
 import AuthNav from "./AuthNav";
 import { NavigationContainer } from "@react-navigation/native";
 import DrawerContent from "./DrawerContent";
@@ -30,7 +31,8 @@ function CustomDrawerContent(props) {
     <>
       <DrawerContentScrollView {...props}>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate("ProfileScreen")}
+          onPress={() =>
+            props.navigation.navigate("ProfileScreen")}
         >
           <View style={styles.drawerHeader}>
             <Text>Header</Text>
@@ -63,17 +65,9 @@ function AppNav() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       initialRouteName="Dashboard"
       screenOptions={{
-        headerRight: () => (
-          <TouchableOpacity>
-            <MaterialCommunityIcons
-              name="weight-lifter"
-              size={50}
-              color="#9BE6DE"
-            />
-          </TouchableOpacity>
-        ),
         headerShown: true,
         headerStyle: {
+          height:80,
           backgroundOpacity: 1,
           backgroundColor: "#133E7C",
           shadowColor: "#133E7C",
@@ -103,6 +97,12 @@ function AppNav() {
                   size={24}
                   color={focused ? "#9BE6DE" : "black"}
                 />
+              ) : drawer.iconType === "AntDesign" ? (
+                <AntDesign
+                  name={drawer.iconName}
+                  size={24}
+                  color={focused ? "#9BE6DE" : "black"}
+                />
               ) : (
                 <FontAwesome5
                   name={drawer.iconName}
@@ -117,10 +117,10 @@ function AppNav() {
               : drawer.name === "ProfileScreen"
               ? ProfileScreen
               : drawer.name === "Saved Items"
-              ? ReferScreen
+              ? Analytics
               : drawer.name === "NewSession"
               ? NewSession
-              : ReferScreen
+              : Analytics
           }
         />
       ))}
